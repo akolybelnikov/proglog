@@ -5,15 +5,15 @@ import (
 	"sync"
 )
 
-var ErrorOffsetNotFpund = fmt.Errorf("offset not found")
+var ErrorOffsetNotFound = fmt.Errorf("offset not found")
 
 type Record struct {
-	Value []byte `json:"value"`
+	Value  []byte `json:"value"`
 	Offset uint64 `json:"offset"`
 }
 
 type Log struct {
-	mu sync.Mutex
+	mu      sync.Mutex
 	records []Record
 }
 
@@ -34,9 +34,8 @@ func (c *Log) Read(offset uint64) (Record, error) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 	if offset >= uint64(len(c.records)) {
-		return Record{}, ErrorOffsetNotFpund
+		return Record{}, ErrorOffsetNotFound
 	}
 
 	return c.records[offset], nil
 }
-
