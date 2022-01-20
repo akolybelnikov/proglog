@@ -119,7 +119,7 @@ func (s *segment) Close() error {
 
 func nearestMultiple(j, k uint64) uint64 {
 	if k > j {
-		return k
+		return 0
 	}
 	return (j / k) * k
 }
