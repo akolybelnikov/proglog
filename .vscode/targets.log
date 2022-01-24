@@ -1,0 +1,318 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+ 
+# GNU Make 4.2.1
+# Built for x86_64-pc-linux-gnu
+# Copyright (C) 1988-2016 Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
+
+# Make data base, printed on Sun Jan 23 12:36:32 2022
+
+# Variables
+
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# automatic
+?F = $(notdir $?)
+# environment
+WSLENV = ELECTRON_RUN_AS_NODE/w:WT_SESSION:BASH_ENV/u:WT_PROFILE_ID
+# default
+.SHELLFLAGS := -c
+# environment
+XDG_SESSION_CLASS = user
+# environment
+VSCODE_AGENT_FOLDER = /home/akolybelnikov/.vscode-server
+# environment
+XDG_SESSION_TYPE = tty
+# environment
+VSCODE_LOG_NATIVE = false
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# automatic
+@F = $(notdir $@)
+# default
+MAKE_VERSION := 4.2.1
+# makefile
+CURDIR := /home/akolybelnikov/proglog
+# makefile
+SHELL = /bin/sh
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
+# environment
+_ = /mnt/c/Program Files/Microsoft VS Code/bin/code
+# environment
+SUDO_COMMAND = /usr/sbin/enter-systemd-namespace 
+# environment
+HUSHLOGIN = FALSE
+# makefile (from 'Makefile', line 1)
+MAKEFILE_LIST :=  Makefile
+# environment
+PRE_NAMESPACE_PATH = /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Users/akoly/python-projects/py399/.venv/Scripts:/mnt/c/Users/akoly/python-projects/py399/.venv/Scripts/python.exe:/mnt/c/Python310/Scripts/:/mnt/c/Python310/:/mnt/c/Program Files/Eclipse Adoptium/jdk-17.0.1.12-hotspot/bin:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Microsoft VS Code/bin:/mnt/c/Program Files/Amazon/AWSCLI/bin/:/mnt/c/Users/akoly/AppData/Roaming/nvm:/mnt/c/Program Files/nodejs:/mnt/c/Program Files (x86)/Yarn/bin/:/mnt/c/Program Files/PuTTY/:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/ProgramData/DockerDesktop/version-bin:/mnt/c/Users/akoly/AppData/Local/Packages/PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0/LocalCache/local-packages/Python39/Scripts:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Gource/cmd:/mnt/c/Program Files/Go/bin:/mnt/c/HashiCorp/Vagrant/bin:/mnt/c/Users/akoly/anaconda3:/mnt/c/Users/akoly/anaconda3/Library/mingw-w64/bin:/mnt/c/Users/akoly/anaconda3/Library/usr/bin:/mnt/c/Users/akoly/anaconda3/Library/bin:/mnt/c/Users/akoly/anaconda3/Scripts:/mnt/c/Users/akoly/.cargo/bin:/mnt/c/Users/akoly/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/akoly/.babun:/mnt/c/Users/akoly/AppData/Local/Yarn/bin:/mnt/c/Users/akoly/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/akoly/.dotnet/tools:/mnt/c/Exercism:/mnt/c/Program Files (x86)/GitHub CLI/:/mnt/c/Users/akoly/go/bin
+# 'override' directive
+GNUMAKEFLAGS := 
+# environment
+XDG_DATA_DIRS = /usr/local/share:/usr/share:/var/lib/snapd/desktop
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/server/remoteExtensionHostProcess
+# environment
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
+# environment
+VSCODE_VERBOSE_LOGGING = true
+# environment
+LESSOPEN = | /usr/bin/lesspipe %s
+# environment
+VSCODE_CWD = /
+# environment
+GOPROXY = https://proxy.golang.org,direct
+# default
+MAKE_HOST := x86_64-pc-linux-gnu
+# environment
+PATH = /home/akolybelnikov/.vscode-server/bin/899d46d82c4c95423fb7e10e68eba52050e30ba3/bin:/home/akolybelnikov/.cargo/bin:/home/akolybelnikov/.local/bin:/home/akolybelnikov/miniconda3/bin:/home/akolybelnikov/miniconda3/condabin:/home/akolybelnikov/.nvm/versions/node/v12.4.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Users/akoly/python-projects/py399/.venv/Scripts:/mnt/c/Users/akoly/python-projects/py399/.venv/Scripts/python.exe:/mnt/c/Python310/Scripts:/mnt/c/Python310:/mnt/c/Program Files/Eclipse Adoptium/jdk-17.0.1.12-hotspot/bin:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0:/mnt/c/WINDOWS/System32/OpenSSH:/mnt/c/Program Files/Microsoft VS Code/bin:/mnt/c/Program Files/Amazon/AWSCLI/bin:/mnt/c/Users/akoly/AppData/Roaming/nvm:/mnt/c/Program Files/nodejs:/mnt/c/Program Files (x86)/Yarn/bin:/mnt/c/Program Files/PuTTY:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/dotnet:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/ProgramData/DockerDesktop/version-bin:/mnt/c/Users/akoly/AppData/Local/Packages/PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0/LocalCache/local-packages/Python39/Scripts:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Gource/cmd:/mnt/c/Program Files/Go/bin:/mnt/c/HashiCorp/Vagrant/bin:/mnt/c/Users/akoly/anaconda3:/mnt/c/Users/akoly/anaconda3/Library/mingw-w64/bin:/mnt/c/Users/akoly/anaconda3/Library/usr/bin:/mnt/c/Users/akoly/anaconda3/Library/bin:/mnt/c/Users/akoly/anaconda3/Scripts:/mnt/c/Users/akoly/.cargo/bin:/mnt/c/Users/akoly/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/akoly/.babun:/mnt/c/Users/akoly/AppData/Local/Yarn/bin:/mnt/c/Users/akoly/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/akoly/.dotnet/tools:/mnt/c/Exercism:/mnt/c/Program Files (x86)/GitHub CLI:/mnt/c/Users/akoly/go/bin:/snap/bin:/usr/local/go/bin:/home/akolybelnikov/go/bin
+# environment
+XDG_RUNTIME_DIR = /run/user/1000
+# environment
+GOPATH = /home/akolybelnikov/go
+# environment
+NVM_BIN = /home/akolybelnikov/.nvm/versions/node/v12.4.0/bin
+# environment
+PRE_NAMESPACE_PWD = /mnt/c/Program Files/Microsoft VS Code
+# environment
+CONDA_PREFIX = /home/akolybelnikov/miniconda3
+# makefile (from 'Makefile', line 1)
+CONFIG_PATH = ${HOME}/.proglog/
+# environment
+VSCODE_LOG_STACK = false
+# environment
+VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-f4d931ac-5bb3-4447-a96b-44f584ec3c6f.sock
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
+# environment
+LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+# automatic
+%F = $(notdir $%)
+# environment
+CONDA_EXE = /home/akolybelnikov/miniconda3/bin/conda
+# environment
+VSCODE_PIPE_LOGGING = true
+# environment
+PWD = /home/akolybelnikov/proglog
+# default
+.LOADED := 
+# environment
+WSL_INTEROP = /run/WSL/13405_interop
+# environment
+WT_SESSION = 
+# environment
+GOMODCACHE = /home/akolybelnikov/go/pkg/mod
+# environment
+HOME = /home/akolybelnikov
+# environment
+LESSCLOSE = /usr/bin/lesspipe %s %s
+# environment
+SUDO_USER = akolybelnikov
+# environment
+LOGNAME = akolybelnikov
+# environment
+SUDO_GID = 1000
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# environment
+CONDA_PROMPT_MODIFIER = (base) 
+# environment
+NVM_CD_FLAGS = 
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# environment
+MAKELEVEL := 0
+# environment
+CONDA_DEFAULT_ENV = base
+# default
+MAKE = $(MAKE_COMMAND)
+# default
+MAKECMDGOALS := all
+# environment
+CONDA_SHLVL = 1
+# environment
+SHLVL = 1
+# environment
+SUDO_UID = 1000
+# environment
+XDG_SESSION_ID = c3
+# environment
+USER = akolybelnikov
+# makefile
+.DEFAULT_GOAL := init
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# environment
+VSCODE_WSL_EXT_LOCATION = /mnt/c/Users/akoly/.vscode/extensions/ms-vscode-remote.remote-wsl-0.63.13
+# default
+MAKE_COMMAND := make
+# environment
+OLDPWD = /
+# default
+.VARIABLES := 
+# automatic
+*F = $(notdir $*)
+# makefile
+MAKEFLAGS = pqrR
+# environment
+MFLAGS = -pqrR
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+MAIL = /var/mail/akolybelnikov
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# automatic
++F = $(notdir $+)
+# environment
+WT_PROFILE_ID = 
+# default
+MAKEFILES := 
+# automatic
+<F = $(notdir $<)
+# environment
+LC_ALL = C
+# environment
+CONDA_PYTHON_EXE = /home/akolybelnikov/miniconda3/bin/python
+# environment
+HOSTTYPE = x86_64
+# automatic
+^F = $(notdir $^)
+# environment
+NVM_DIR = /home/akolybelnikov/.nvm
+# default
+SUFFIXES := 
+# environment
+_CE_M = 
+# default
+.INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
+# environment
+VSCODE_INJECT_NODE_MODULE_LOOKUP_PATH = /home/akolybelnikov/.vscode-server/bin/899d46d82c4c95423fb7e10e68eba52050e30ba3/remote/node_modules
+# default
+.RECIPEPREFIX := 
+# environment
+GPG_TTY = /dev/pts/8
+# environment
+LANG = C
+# environment
+TERM = xterm-256color
+# environment
+VSCODE_EXTHOST_WILL_SEND_SOCKET = true
+# environment
+WSL_DISTRO_NAME = Ubuntu
+# environment
+MOTD_SHOWN = pam
+# environment
+_CE_CONDA = 
+# variable set hash-table stats:
+# Load=100/1024=10%, Rehash=0, Collisions=10/125=8%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (device 2064, inode 426): 13 files, no impossibilities.
+
+# 13 files, no impossibilities in 1 directories.
+
+# Implicit Rules
+
+# No implicit rules.
+
+# Files
+
+# Not a target:
+all:
+#  Command line target.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has not been updated.
+
+.PHONY: init gencert
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-01-23 12:35:30.74
+#  File has been updated.
+#  Successfully updated.
+
+test:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 27):
+	go test -race ./...
+
+gencert:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 9):
+	cfssl gencert \
+		-initca test/ca-csr.json | cfssljson -bare ca
+	cfssl gencert \
+		-ca=ca.pem \
+		-ca-key=ca-key.pem \
+		-config=test/ca-config.json \
+		-profile=server \
+		test/server-csr.json | cfssljson -bare server
+
+compile:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 19):
+ 
+	protoc api/v1/*.proto \
+	--go_out=. \
+	--go-grpc_out=. \
+	--go_opt=paths=source_relative \
+	--go-grpc_opt=paths=source_relative \
+	--proto_path=.
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+init:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 5):
+	mkdir -p ${CONFIG_PATH}
+
+# files hash-table stats:
+# Load=9/1024=1%, Rehash=0, Collisions=0/24=0%
+# VPATH Search Paths
+
+# No 'vpath' search paths.
+
+# No general ('VPATH' variable) search path.
+
+# strcache buffers: 1 (0) / strings = 22 / storage = 172 B / avg = 7 B
+# current buf: size = 8162 B / used = 172 B / count = 22 / avg = 7 B
+
+# strcache performance: lookups = 36 / hit rate = 38%
+# hash-table stats:
+# Load=22/8192=0%, Rehash=0, Collisions=1/36=3%
+# Finished Make data base on Sun Jan 23 12:36:32 2022
+
+ 
