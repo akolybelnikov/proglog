@@ -17,7 +17,7 @@ import (
 func TestServer(t *testing.T) {
 	for scenario, fn := range map[string]func(
 		t *testing.T,
-		cliean api.LogClient,
+		client api.LogClient,
 		config *Config,
 	){
 		"produce/consume a message to/from the log succeeds": testProduceConsume,
