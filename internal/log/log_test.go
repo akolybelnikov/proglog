@@ -23,7 +23,12 @@ func TestLog(t *testing.T) {
 		t.Run(scenario, func(t *testing.T) {
 			dir, err := ioutil.TempDir("", "store-test")
 			require.NoError(t, err)
-			defer os.RemoveAll(dir)
+			defer func(path string) {
+				err := os.RemoveAll(path)
+				if err != nil {
+
+				}
+			}(dir)
 			c := Config{}
 			c.Segment.MaxStoreBytes = 32
 			log, err := NewLog(dir, c)
@@ -35,16 +40,16 @@ func TestLog(t *testing.T) {
 }
 
 func testAppendRead(t *testing.T, log *Log) {
-	append := &api.Record{
+	tAppend := &api.Record{
 		Value: []byte("test log"),
 	}
-	off, err := log.Append(append)
+	off, err := log.Append(tAppend)
 	require.NoError(t, err)
 	require.Equal(t, uint64(0), off)
 
 	read, err := log.Read(off)
 	require.NoError(t, err)
-	require.Equal(t, append.Value, read.Value)
+	require.Equal(t, tAppend.Value, read.Value)
 }
 
 func testOutOfRangeErr(t *testing.T, log *Log) {
@@ -55,11 +60,11 @@ func testOutOfRangeErr(t *testing.T, log *Log) {
 }
 
 func testInitExisting(t *testing.T, log *Log) {
-	append := &api.Record{
+	tAppend := &api.Record{
 		Value: []byte("test log"),
 	}
 	for i := 0; i < 3; i++ {
-		_, err := log.Append(append)
+		_, err := log.Append(tAppend)
 		require.NoError(t, err)
 	}
 	require.NoError(t, log.Close())
@@ -83,10 +88,10 @@ func testInitExisting(t *testing.T, log *Log) {
 }
 
 func testReader(t *testing.T, log *Log) {
-	append := &api.Record{
+	tAppend := &api.Record{
 		Value: []byte("testing log"),
 	}
-	off, err := log.Append(append)
+	off, err := log.Append(tAppend)
 	require.NoError(t, err)
 	require.Equal(t, uint64(0), off)
 
@@ -97,15 +102,15 @@ func testReader(t *testing.T, log *Log) {
 	read := &api.Record{}
 	err = proto.Unmarshal(b[lenWidth:], read)
 	require.NoError(t, err)
-	require.Equal(t, append.Value, read.Value)
+	require.Equal(t, tAppend.Value, read.Value)
 }
 
 func testTruncate(t *testing.T, log *Log) {
-	append := &api.Record{
+	tAppend := &api.Record{
 		Value: []byte("testing log"),
 	}
 	for i := 0; i < 3; i++ {
-		_, err := log.Append(append)
+		_, err := log.Append(tAppend)
 		require.NoError(t, err)
 	}
 	err := log.Truncate(1)

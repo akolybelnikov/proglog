@@ -12,7 +12,10 @@ import (
 
 func TestSegment(t *testing.T) {
 	dir, _ := ioutil.TempDir("", "segment-test")
-	defer os.RemoveAll(dir)
+	defer func(path string) {
+		err := os.RemoveAll(path)
+		require.NoError(t, err)
+	}(dir)
 
 	want := &api.Record{Value: []byte("hello segment")}
 
