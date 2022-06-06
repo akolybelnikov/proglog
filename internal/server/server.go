@@ -2,20 +2,40 @@ package server
 
 import (
 	"context"
+	grpcMiddleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	grpcAuth "github.com/grpc-ecosystem/go-grpc-middleware/auth"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/credentials"
+	"google.golang.org/grpc/peer"
+	"google.golang.org/grpc/status"
 
 	api "github.com/akolybelnikov/proglog/api/v1"
+
 	"google.golang.org/grpc"
 )
 
 type Config struct {
-	CommitLog CommitLog
+	CommitLog  CommitLog
+	Authorizer Authorizer
 }
+
+const (
+	objectWildcard = "*"
+	produceAction  = "produce"
+	consumeAction  = "consume"
+)
 
 var _ api.LogServer = (*grpcServer)(nil)
 
 func NewGRPCServer(config *Config, opts ...grpc.ServerOption) (*grpc.Server, error) {
+	opts = append(opts, grpc.StreamInterceptor(
+		grpcMiddleware.ChainStreamServer(
+			grpcAuth.StreamServerInterceptor(authenticate),
+		)), grpc.UnaryInterceptor(grpcMiddleware.ChainUnaryServer(
+		grpcAuth.UnaryServerInterceptor(authenticate),
+	)))
 	gsrv := grpc.NewServer(opts...)
-	srv, err := newgrpcServer(config)
+	srv, err := newGrpcServer(config)
 	if err != nil {
 		return nil, err
 	}
@@ -28,7 +48,7 @@ type grpcServer struct {
 	*Config
 }
 
-func newgrpcServer(config *Config) (srv *grpcServer, err error) {
+func newGrpcServer(config *Config) (srv *grpcServer, err error) {
 	srv = &grpcServer{
 		Config: config,
 	}
@@ -36,6 +56,9 @@ func newgrpcServer(config *Config) (srv *grpcServer, err error) {
 }
 
 func (s *grpcServer) Produce(ctx context.Context, req *api.ProduceRequest) (*api.ProduceResponse, error) {
+	if err := s.Authorizer.Authorize(subject(ctx), objectWildcard, produceAction); err != nil {
+		return nil, err
+	}
 	offset, err := s.CommitLog.Append(req.Record)
 	if err != nil {
 		return nil, err
@@ -44,6 +67,9 @@ func (s *grpcServer) Produce(ctx context.Context, req *api.ProduceRequest) (*api
 }
 
 func (s *grpcServer) Consume(ctx context.Context, req *api.ConsumeRequest) (*api.ConsumeResponse, error) {
+	if err := s.Authorizer.Authorize(subject(ctx), objectWildcard, consumeAction); err != nil {
+		return nil, err
+	}
 	record, err := s.CommitLog.Read(req.Offset)
 	if err != nil {
 		return nil, err
@@ -93,3 +119,30 @@ type CommitLog interface {
 	Append(*api.Record) (uint64, error)
 	Read(uint64) (*api.Record, error)
 }
+
+type Authorizer interface {
+	Authorize(subject, object, action string) error
+}
+
+func authenticate(ctx context.Context) (context.Context, error) {
+	p, ok := peer.FromContext(ctx)
+	if !ok {
+		return ctx, status.New(codes.Unknown, "couldn't find peer info").Err()
+	}
+
+	if p.AuthInfo == nil {
+		return context.WithValue(ctx, subjectContextKey{}, ""), nil
+	}
+
+	tlsInfo := p.AuthInfo.(credentials.TLSInfo)
+	name := tlsInfo.State.VerifiedChains[0][0].Subject.CommonName
+	ctx = context.WithValue(ctx, subjectContextKey{}, name)
+
+	return ctx, nil
+}
+
+func subject(ctx context.Context) string {
+	return ctx.Value(subjectContextKey{}).(string)
+}
+
+type subjectContextKey struct{}
