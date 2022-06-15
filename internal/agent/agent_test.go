@@ -11,6 +11,7 @@ import (
 	"github.com/travisjeffery/go-dynaport"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
+	"google.golang.org/grpc/status"
 	"io/ioutil"
 	"os"
 	"testing"
@@ -53,7 +54,8 @@ func TestAgent(t *testing.T) {
 			)
 		}
 
-		agent, err := agent.New(agent.Config{
+		a, err := agent.New(agent.Config{
+			Bootstrap:       i == 0,
 			NodeName:        fmt.Sprintf("%d", i),
 			StartJoinAddrs:  startJoinAddrs,
 			BindAddr:        bindAddr,
@@ -66,17 +68,19 @@ func TestAgent(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		agents = append(agents, agent)
+		agents = append(agents, a)
 	}
 	defer func() {
-		for _, agent := range agents {
-			err := agent.Shutdown()
+		for _, a := range agents {
+			err := a.Shutdown()
 			require.NoError(t, err)
 			require.NoError(t,
-				os.RemoveAll(agent.Config.DataDir),
+				os.RemoveAll(a.Config.DataDir),
 			)
 		}
 	}()
+
+	// wait until agents have joined the cluster
 	time.Sleep(3 * time.Second)
 
 	leaderClient := client(t, agents[0], peerTLSConfig)
@@ -89,6 +93,10 @@ func TestAgent(t *testing.T) {
 		},
 	)
 	require.NoError(t, err)
+
+	// wait until replication has finished
+	time.Sleep(3 * time.Second)
+
 	consumeResponse, err := leaderClient.Consume(
 		context.Background(),
 		&api.ConsumeRequest{
@@ -97,9 +105,6 @@ func TestAgent(t *testing.T) {
 	)
 	require.NoError(t, err)
 	require.Equal(t, consumeResponse.Record.Value, []byte("foo"))
-
-	// wait until replication has finished
-	time.Sleep(3 * time.Second)
 
 	followerClient := client(t, agents[1], peerTLSConfig)
 	consumeResponse, err = followerClient.Consume(
@@ -110,6 +115,16 @@ func TestAgent(t *testing.T) {
 	)
 	require.NoError(t, err)
 	require.Equal(t, consumeResponse.Record.Value, []byte("foo"))
+
+	consumeResponse, err = leaderClient.Consume(
+		context.Background(),
+		&api.ConsumeRequest{Offset: produceResponse.Offset + 1},
+	)
+	require.Nil(t, consumeResponse)
+	require.Error(t, err)
+	got := status.Code(err)
+	want := status.Code(api.ErrOffsetOutOfRange{}.GRPCStatus().Err())
+	require.Equal(t, got, want)
 }
 
 func client(
