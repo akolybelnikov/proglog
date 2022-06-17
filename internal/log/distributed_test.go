@@ -95,6 +95,7 @@ func TestMultipleNodes(t *testing.T) {
 	time.Sleep(50 * time.Millisecond)
 
 	servers, err = logs[0].GetServers()
+
 	require.NoError(t, err)
 	require.Equal(t, 2, len(servers))
 	require.True(t, servers[0].IsLeader)
