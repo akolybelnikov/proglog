@@ -7,6 +7,7 @@ import (
 	api "github.com/akolybelnikov/proglog/api/v1"
 	"github.com/akolybelnikov/proglog/internal/agent"
 	"github.com/akolybelnikov/proglog/internal/config"
+	"github.com/akolybelnikov/proglog/internal/loadbalance"
 	"github.com/stretchr/testify/require"
 	"github.com/travisjeffery/go-dynaport"
 	"google.golang.org/grpc"
@@ -137,7 +138,8 @@ func client(
 	rpcAddr, err := agent.Config.RPCAddr()
 	require.NoError(t, err)
 	conn, err := grpc.Dial(fmt.Sprintf(
-		"%s",
+		"%s:///%s",
+		loadbalance.Name,
 		rpcAddr,
 	), opts...)
 	require.NoError(t, err)
