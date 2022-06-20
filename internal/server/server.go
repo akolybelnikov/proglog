@@ -4,8 +4,8 @@ import (
 	"context"
 	grpcMiddleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpcAuth "github.com/grpc-ecosystem/go-grpc-middleware/auth"
-	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
-	grpc_ctxtags "github.com/grpc-ecosystem/go-grpc-middleware/tags"
+	grpcZap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
+	grpcCtxTags "github.com/grpc-ecosystem/go-grpc-middleware/tags"
 	"go.opencensus.io/plugin/ocgrpc"
 	"go.opencensus.io/stats/view"
 	"go.opencensus.io/trace"
@@ -13,6 +13,8 @@ import (
 	"go.uber.org/zap/zapcore"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/credentials"
+	"google.golang.org/grpc/health"
+	"google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/peer"
 	"google.golang.org/grpc/status"
 	"time"
@@ -38,8 +40,8 @@ var _ api.LogServer = (*grpcServer)(nil)
 
 func NewGRPCServer(config *Config, opts ...grpc.ServerOption) (*grpc.Server, error) {
 	logger := zap.L().Named("server")
-	zapOpts := []grpc_zap.Option{
-		grpc_zap.WithDurationField(
+	zapOpts := []grpcZap.Option{
+		grpcZap.WithDurationField(
 			func(duration time.Duration) zapcore.Field {
 				return zap.Int64("grpc.time_ns", duration.Nanoseconds())
 			},
@@ -54,17 +56,22 @@ func NewGRPCServer(config *Config, opts ...grpc.ServerOption) (*grpc.Server, err
 
 	opts = append(opts, grpc.StreamInterceptor(
 		grpcMiddleware.ChainStreamServer(
-			grpc_ctxtags.StreamServerInterceptor(),
-			grpc_zap.StreamServerInterceptor(logger, zapOpts...),
+			grpcCtxTags.StreamServerInterceptor(),
+			grpcZap.StreamServerInterceptor(logger, zapOpts...),
 			grpcAuth.StreamServerInterceptor(authenticate),
 		)), grpc.UnaryInterceptor(grpcMiddleware.ChainUnaryServer(
-		grpc_ctxtags.UnaryServerInterceptor(),
-		grpc_zap.UnaryServerInterceptor(logger, zapOpts...),
+		grpcCtxTags.UnaryServerInterceptor(),
+		grpcZap.UnaryServerInterceptor(logger, zapOpts...),
 		grpcAuth.UnaryServerInterceptor(authenticate),
 	)),
 		grpc.StatsHandler(&ocgrpc.ServerHandler{}),
 	)
 	gsrv := grpc.NewServer(opts...)
+
+	healthServe := health.NewServer()
+	healthServe.SetServingStatus("", grpc_health_v1.HealthCheckResponse_SERVING)
+	grpc_health_v1.RegisterHealthServer(gsrv, healthServe)
+
 	srv, err := newGrpcServer(config)
 	if err != nil {
 		return nil, err
