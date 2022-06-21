@@ -106,6 +106,7 @@ func (l *DistributedLog) setupRaft(dataDir string) error {
 	if err != nil {
 		return err
 	}
+
 	hasState, err := raft.HasExistingState(
 		logStore,
 		stableStore,
@@ -114,11 +115,13 @@ func (l *DistributedLog) setupRaft(dataDir string) error {
 	if err != nil {
 		return err
 	}
+
 	if l.config.Raft.Bootstrap && !hasState {
 		config := raft.Configuration{
 			Servers: []raft.Server{
 				{
-					ID: config.LocalID, Address: transport.LocalAddr(),
+					ID:      config.LocalID,
+					Address: raft.ServerAddress(l.config.Raft.BindAddr),
 				},
 			},
 		}
